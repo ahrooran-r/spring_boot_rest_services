@@ -38,4 +38,16 @@ public class UserDAO {
         users.add(user);
         return user;
     }
+
+    public User delete(int id) {
+        User deletedUser = null;
+        for (User user : users) {
+            if (user.getId() == id) {
+                deletedUser = user;
+                users.remove(user);
+                break;
+            }
+        }
+        return deletedUser;
+    }
 }

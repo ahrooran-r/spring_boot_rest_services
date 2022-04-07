@@ -65,4 +65,13 @@ public class UserController {
         // Now we need to send this along with an OK message
         return ResponseEntity.created(location).build();
     }
+
+    @DeleteMapping("/users/{id}")
+    public User deleteUser(@PathVariable int id) {
+
+        User user = userDAO.delete(id);
+
+        if (null == user) throw new UserNotFoundException(id);
+        return user;
+    }
 }
