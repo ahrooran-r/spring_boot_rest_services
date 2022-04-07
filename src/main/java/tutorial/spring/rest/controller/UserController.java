@@ -15,8 +15,13 @@ import java.util.List;
 @RequestMapping("/")
 public class UserController {
 
+    private final UserDAO userDAO;
+
+    // Constructor injection is preferred over field injection -> https://stackoverflow.com/q/39890849/10582056
     @Autowired
-    UserDAO userDAO;
+    public UserController(UserDAO userDAO) {
+        this.userDAO = userDAO;
+    }
 
     @GetMapping("/users")
     public List<User> retrieveAllUsers() {
@@ -49,6 +54,9 @@ public class UserController {
         // `ServletUriComponentsBuilder` class offers different methods for that
         // It can capture current request URI -> "/users"
         // Now we just need to add `4` to it -> `path` method does it
+
+        // https://stackoverflow.com/a/42650241/10582056
+
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequestUri()
                 .path("/{id}")
