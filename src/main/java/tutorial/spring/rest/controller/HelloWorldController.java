@@ -1,12 +1,20 @@
 package tutorial.spring.rest.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
 import tutorial.spring.rest.repository.HelloWorldBean;
+
+import java.util.Locale;
 
 @RestController
 @RequestMapping(method = RequestMethod.GET, path = "/hello")
 // If we don't specify a `method`, it's going to map to any HTTP request.
 public class HelloWorldController {
+
+    @Autowired
+    private MessageSource messageSource;
 
     // Whenever we use a REST service, we define 2 things:
     // 1. GET, POST, etc
@@ -34,5 +42,12 @@ public class HelloWorldController {
     @GetMapping("/world/{name}")
     public String helloWorldBeanWithPathParam(@PathVariable String name) {
         return "HelloWorld -> Your name is: " + name;
+    }
+
+    @GetMapping("/world-inter")
+    // @RequestHeader -> indicates that a method parameter should be bound to a web request header
+    // We can give value directly as "Accept-Language" or use existing enum
+    public String helloWorldInternationalized(@RequestHeader(value = HttpHeaders.ACCEPT_LANGUAGE, required = false) Locale locale) {
+        return messageSource.getMessage("good.morning.message", null, locale);
     }
 }
