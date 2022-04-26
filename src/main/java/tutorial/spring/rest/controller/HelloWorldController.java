@@ -5,6 +5,7 @@ import tutorial.spring.rest.repository.HelloWorldBean;
 
 @RestController
 @RequestMapping(method = RequestMethod.GET, path = "/hello")
+// If we don't specify a `method`, it's going to map to any HTTP request.
 public class HelloWorldController {
 
     // Whenever we use a REST service, we define 2 things:
