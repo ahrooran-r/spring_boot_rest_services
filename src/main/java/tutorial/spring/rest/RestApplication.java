@@ -4,8 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.ResourceBundleMessageSource;
-import org.springframework.web.servlet.LocaleResolver;
-import org.springframework.web.servlet.i18n.SessionLocaleResolver;
+import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
 
 import java.util.Locale;
 
@@ -16,15 +15,29 @@ public class RestApplication {
         SpringApplication.run(RestApplication.class, args);
     }
 
-    // Internationalization
+
+    // Simplified Internationalization <- automatically captures locale from header field and processes it
+    // then hands over the locale info to `LocaleContextHolder`
+    // so no need to give it manually
     @Bean
-    public LocaleResolver localeResolver() {
-        SessionLocaleResolver localeResolver = new SessionLocaleResolver();
+    public AcceptHeaderLocaleResolver acceptHeaderLocaleResolver() {
+        AcceptHeaderLocaleResolver localeResolver = new AcceptHeaderLocaleResolver();
         localeResolver.setDefaultLocale(Locale.US);
         return localeResolver;
     }
 
+    // // Manual Internationalization <- only works if I give locale manually
+    // @Bean
+    // public LocaleResolver localeResolver() {
+    //     SessionLocaleResolver localeResolver = new SessionLocaleResolver();
+    //     localeResolver.setDefaultLocale(Locale.US);
+    //     return localeResolver;
+    // }
+
     // Add custom `messages` as sources
+    // name of method should be `messageSource`
+    // or instead of this method we can simply add a property to application.properties
+    // `spring.messages.basename=messages`
     @Bean
     public ResourceBundleMessageSource messageSource() {
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
@@ -34,5 +47,4 @@ public class RestApplication {
         messageSource.addBasenames("messages");
         return messageSource;
     }
-
 }

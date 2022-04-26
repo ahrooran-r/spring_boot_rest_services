@@ -1,6 +1,8 @@
 package tutorial.spring.rest.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -17,6 +19,9 @@ import java.util.List;
 public class UserController {
 
     private final UserDAO userDAO;
+
+    @Autowired
+    private MessageSource messageSource;
 
     // Constructor injection is preferred over field injection -> https://stackoverflow.com/q/39890849/10582056
     @Autowired
@@ -74,5 +79,11 @@ public class UserController {
 
         if (null == user) throw new UserNotFoundException(id);
         return user;
+    }
+
+    // simplified internationalization
+    @GetMapping("/user-inter")
+    public String sayHello() {
+        return messageSource.getMessage("good.morning.message", null, LocaleContextHolder.getLocale());
     }
 }
