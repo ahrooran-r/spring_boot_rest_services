@@ -8,6 +8,7 @@ import tutorial.spring.rest.entity.User;
 import tutorial.spring.rest.exception.UserNotFoundException;
 import tutorial.spring.rest.repository.UserDAO;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
@@ -45,10 +46,10 @@ public class UserController {
      * put `@RequestBody`
      */
     @PostMapping("/users")
-    public ResponseEntity<Object> createUser(@RequestBody User user) {
+    public ResponseEntity<Object> createUser(@Valid @RequestBody User user) {
         user = userDAO.save(user);
 
-        // Best practice is to return a status called created along with URI to the newly created resource
+        // Best practice is to return a status called `created` along with URI to the newly created resource
         // URI would look like this: `/users/4`
         // So we need to create that first...
         // `ServletUriComponentsBuilder` class offers different methods for that
@@ -62,7 +63,7 @@ public class UserController {
                 .path("/{id}")
                 .buildAndExpand(user.getId()).toUri();
 
-        // Now we need to send this along with an OK message
+        // Now we need to send this along with a `CREATED` status code
         return ResponseEntity.created(location).build();
     }
 
