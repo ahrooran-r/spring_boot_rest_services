@@ -1,5 +1,6 @@
 package tutorial.spring.rest.repository;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
@@ -13,6 +14,8 @@ import lombok.NoArgsConstructor;
 @JsonIgnoreProperties(value = {"name"})
 // Approach 2: Specify fields at class level. String "name" corresponds to field `name`
 // Approach 1 is better because of we refactor fields, we have to rename the strings as well
+// Approach 3: Dynamic filtering -> defining JsonFilter
+@JsonFilter("SomeBeanFilter")
 public class SomeBean {
 
     private String id;
