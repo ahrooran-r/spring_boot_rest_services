@@ -66,6 +66,12 @@
             <optional>true</optional>
         </dependency>
 
+        <!--    Basic authentication    -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
         <!--    For monitoring    -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
