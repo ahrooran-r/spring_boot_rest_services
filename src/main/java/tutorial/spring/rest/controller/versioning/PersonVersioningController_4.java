@@ -31,7 +31,7 @@ public class PersonVersioningController_4 {
         return new PersonV1("KingKong");
     }
 
-    @GetMapping(value = "/person/produces", produces = "application/tutorial.spring.rest-v1+json")
+    @GetMapping(value = "/person/produces", produces = "application/tutorial.spring.rest-v2+json")
     public PersonV2 personV2() {
         return new PersonV2(new Name("King", "Kong"));
     }
